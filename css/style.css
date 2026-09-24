@@ -1167,12 +1167,14 @@ input, textarea, select {
 .graph-svg-wrapper {
   width: 100%;
   max-width: 440px;
-  height: 320px;
+  aspect-ratio: 420 / 300;
+  height: auto;
   background: #0f172a;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
+  margin: 0 auto;
 }
 
 .graph-svg {
@@ -1472,9 +1474,446 @@ input, textarea, select {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* Responsive utilities */
-@media (max-width: 640px) {
-  .hero-title { font-size: 2rem; }
-  .header-tag { display: none; }
-  .dash-welcome { flex-direction: column; align-items: flex-start; }
+/* ==========================================================================
+   SISTEMA DE ADAPTABILIDAD RESPONSIVE (CELULARES, TABLETS Y DISPOSITIVOS MÓVILES)
+   ========================================================================== */
+
+/* Prevenir desbordamiento horizontal en todo el sitio */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
 }
+
+/* Prevenir auto-zoom molesto en iOS Safari asegurando 16px en inputs */
+input, textarea, select, .form-control, .chat-input {
+  font-size: 16px !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. Breakpoint: Dispositivos Móviles y Tablets (<= 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  /* Header compacto */
+  .site-header {
+    padding: 10px 0;
+  }
+
+  .header-tag {
+    display: none; /* Ahorra espacio para evitar que el logo se rompa */
+  }
+
+  .logo-badge {
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+  }
+
+  .logo-text {
+    font-size: 1.15rem;
+  }
+
+  .header-nav {
+    gap: 6px;
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 0.82rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 32px 0 20px;
+  }
+
+  .hero-pill {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem);
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    line-height: 1.55;
+    padding: 0 6px;
+  }
+
+  /* Botones del Hero: Adaptados a pantalla táctil */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 320px;
+    margin: 0 auto 32px;
+    gap: 12px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  /* Grid de Características */
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .feature-card {
+    padding: 22px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Banner Bilingüe Guaraní Jopara */
+  .bilingual-banner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 16px !important;
+    gap: 16px !important;
+    margin: 20px 0 36px !important;
+  }
+
+  .bilingual-banner .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Dashboard del Estudiante */
+  .dash-welcome {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .dash-user-title {
+    font-size: 1.45rem;
+  }
+
+  .dash-user-sub {
+    font-size: 0.9rem;
+  }
+
+  .dash-stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+
+  .stat-chip {
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    gap: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat-chip-val {
+    font-size: 0.85rem;
+  }
+
+  .dash-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .dash-card {
+    padding: 20px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Selector de Idiomas */
+  .lang-page-wrapper {
+    margin: 24px auto;
+  }
+
+  .lang-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .lang-card {
+    padding: 22px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  #btn-continue {
+    width: 100%;
+  }
+
+  /* Práctica y Laboratorio de Funciones */
+  .practice-container {
+    padding: 16px 0;
+  }
+
+  .topic-selector-tabs {
+    gap: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .topic-selector-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topic-tab-btn {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+  }
+
+  .practice-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .exercise-card {
+    padding: 20px 16px;
+    gap: 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .formula-display {
+    font-size: 1.15rem;
+    padding: 12px;
+    word-break: break-all;
+  }
+
+  .exercise-question {
+    font-size: 1.05rem;
+    line-height: 1.45;
+  }
+
+  .answer-option-btn {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    gap: 10px;
+    border-radius: var(--radius-md);
+  }
+
+  .practice-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px !important;
+  }
+
+  .practice-actions .btn {
+    width: 100%;
+  }
+
+  .practice-actions #btn-next {
+    margin-left: 0 !important;
+  }
+
+  .graph-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-lg);
+  }
+
+  .graph-legend {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* Tutor de IA y Chat */
+  .tutor-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    min-height: auto;
+  }
+
+  .chat-panel {
+    height: calc(100vh - 190px);
+    min-height: 460px;
+    max-height: 72vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .chat-header {
+    padding: 12px 14px;
+  }
+
+  .tutor-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  .tutor-name {
+    font-size: 0.95rem;
+  }
+
+  .tutor-badge-status {
+    font-size: 0.72rem;
+  }
+
+  .chat-messages {
+    padding: 14px 12px;
+    gap: 12px;
+  }
+
+  .chat-msg {
+    max-width: 92%;
+    gap: 8px;
+  }
+
+  .msg-bubble {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .quick-prompts {
+    padding: 8px 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .quick-prompts::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quick-prompt-btn {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+  }
+
+  .chat-input-bar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .icon-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Barra lateral del Tutor */
+  .side-box {
+    padding: 18px 14px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Progreso del Estudiante */
+  .progress-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .progress-summary-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .meter-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Portal Docente */
+  .teacher-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .teacher-header-actions {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .teacher-header-actions .btn {
+    width: 100%;
+  }
+
+  /* Modales y Notificaciones */
+  .modal-dialog {
+    max-width: 95%;
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+    margin: 10px;
+  }
+
+  .toast-container {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .toast {
+    font-size: 0.85rem;
+    padding: 12px 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Breakpoint: Smartphones Compactos (<= 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .header-inner {
+    gap: 8px;
+  }
+
+  /* Ocultar texto largo del botón de idioma para ahorrar ancho */
+  .lang-toggle-btn .lang-current-label {
+    display: none;
+  }
+
+  .lang-toggle-btn {
+    padding: 6px 10px;
+  }
+
+  /* Barra de estadísticas en columna para pantallas estrechas */
+  .dash-stats-bar {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stat-chip {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Métricas de progreso en 1 columna en pantallas muy estrechas */
+  .progress-summary-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Chat adaptado a teclados móviles */
+  .chat-panel {
+    height: calc(100vh - 170px);
+    min-height: 420px;
+  }
+
+  .chat-msg {
+    max-width: 96%;
+  }
+
+  .msg-bubble {
+    font-size: 0.88rem;
+    padding: 10px 12px;
+  }
+}
+
