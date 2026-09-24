@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AranduMath - Panel del Estudiante</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo-link">
+        <div class="logo-badge">fx</div>
+        <div class="logo-text">Arandu<span>Math</span></div>
+        <span class="header-tag" data-i18n="brandSubtitle">Bachillerato Técnico en Informática</span>
+      </a>
+
+      <nav class="header-nav">
+        <button class="lang-toggle-btn" title="Cambiar idioma / Emoambue ñe'ẽ">
+          <span class="lang-current-label">Castellano</span>
+          <span class="lang-badge">ES</span>
+        </button>
+        <a href="profesor.html" class="nav-link" data-i18n="teacherArea">Área Docente</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Header del Dashboard -->
+    <section class="dash-header">
+      <div class="dash-welcome">
+        <div>
+          <h1 class="dash-user-title" data-i18n="dashGreeting">¡Hola de nuevo, Estudiante!</h1>
+          <p class="dash-user-sub" data-i18n="dashMotivation">¿Qué vamos a comprender hoy en AranduMath?</p>
+        </div>
+
+        <div class="dash-stats-bar">
+          <div class="stat-chip">
+            <span class="stat-indicator cyan"></span>
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-dim);" data-i18n="statCompleted">Ejercicios resueltos</div>
+              <div class="stat-chip-val" id="user-completed-count">0 completados</div>
+            </div>
+          </div>
+
+          <div class="stat-chip">
+            <span class="stat-indicator primary"></span>
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-dim);" data-i18n="statLevel">Nivel de práctica</div>
+              <div class="stat-chip-val" id="user-level">Por comenzar</div>
+            </div>
+          </div>
+
+          <div class="stat-chip">
+            <span class="stat-indicator amber"></span>
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-dim);" data-i18n="statStreak">Racha de estudio</div>
+              <div class="stat-chip-val" id="user-streak">0 días</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid de Tarjetas Principales del Estudiante -->
+    <section class="dash-cards-grid">
+      <!-- 1. Tutor de Matemática -->
+      <a href="tutor.html" class="dash-card">
+        <div>
+          <div class="dash-card-icon-wrap" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <h2 class="dash-card-title" data-i18n="cardTutorTitle">Tutor de Matemática</h2>
+          <p class="dash-card-desc" data-i18n="cardTutorDesc">
+            Conversá con el tutor de IA. Planteá dudas de clase o conceptos difíciles y recibí orientación paso a paso.
+          </p>
+        </div>
+        <div class="dash-card-footer">
+          <span data-i18n="cardTutorAction">Abrir tutor</span>
+          <span class="arrow-icon">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- 2. Subir Ejercicio -->
+      <a href="tutor.html?action=upload" class="dash-card">
+        <div>
+          <div class="dash-card-icon-wrap" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+          <h2 class="dash-card-title" data-i18n="cardUploadTitle">Subir ejercicio</h2>
+          <p class="dash-card-desc" data-i18n="cardUploadDesc">
+            Tomá o subí una foto de tu ejercicio del cuaderno o pizarrón para analizarlo y recibir pistas guiadas.
+          </p>
+        </div>
+        <div class="dash-card-footer">
+          <span data-i18n="cardUploadAction">Subir foto</span>
+          <span class="arrow-icon">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- 3. Practicar -->
+      <a href="practica.html" class="dash-card">
+        <div>
+          <div class="dash-card-icon-wrap" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </div>
+          <h2 class="dash-card-title" data-i18n="cardPracticeTitle">Practicar funciones</h2>
+          <p class="dash-card-desc" data-i18n="cardPracticeDesc">
+            Desafíos interactivos sobre función lineal, cuadrática, dominio, recorrido y gráficas cartesianas.
+          </p>
+        </div>
+        <div class="dash-card-footer">
+          <span data-i18n="cardPracticeAction">Empezar práctica</span>
+          <span class="arrow-icon">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- 4. Mi Progreso -->
+      <a href="progreso.html" class="dash-card">
+        <div>
+          <div class="dash-card-icon-wrap" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <h2 class="dash-card-title" data-i18n="cardProgressTitle">Mi progreso</h2>
+          <p class="dash-card-desc" data-i18n="cardProgressDesc">
+            Visualizá tus temas dominados, tu nivel actual y aquellos conceptos que necesitan refuerzo personalizado.
+          </p>
+        </div>
+        <div class="dash-card-footer">
+          <span data-i18n="cardProgressAction">Ver estadísticas</span>
+          <span class="arrow-icon">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- 5. Cambiar Idioma -->
+      <a href="idioma.html" class="dash-card" style="border-color: rgba(99, 102, 241, 0.3);">
+        <div>
+          <div class="dash-card-icon-wrap" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+          <h2 class="dash-card-title" data-i18n="cardLangTitle">Cambiar idioma</h2>
+          <p class="dash-card-desc" data-i18n="cardLangDesc">
+            Alterná cómodamente entre Castellano y Guaraní Jopara para toda la interfaz y las explicaciones del tutor.
+          </p>
+        </div>
+        <div class="dash-card-footer">
+          <span data-i18n="cardLangAction">Configurar idioma</span>
+          <span class="arrow-icon">&rarr;</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- Resumen de Temas en Curso -->
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 24px; margin-bottom: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.1rem; font-weight: 700;">Ruta de aprendizaje recomendada</h3>
+        <a href="practica.html" style="font-size: 0.88rem; color: var(--accent-cyan); font-weight: 600;">Ver temario completo &rarr;</a>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+        <span style="background: var(--bg-card); padding: 8px 14px; border-radius: var(--radius-md); font-size: 0.88rem; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot success"></span> <b>Concepto de función</b> <span id="route-concepto">(0% por comenzar)</span>
+        </span>
+        <span style="background: var(--bg-card); padding: 8px 14px; border-radius: var(--radius-md); font-size: 0.88rem; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot success"></span> <b>Función lineal</b> <span id="route-lineal">(0% por comenzar)</span>
+        </span>
+        <span style="background: var(--bg-card); padding: 8px 14px; border-radius: var(--radius-md); font-size: 0.88rem; border: 1px solid rgba(245, 158, 11, 0.4); display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot warning"></span> <b>Función cuadrática</b> <span id="route-cuadratica">(0% por comenzar)</span>
+        </span>
+        <span style="background: var(--bg-card); padding: 8px 14px; border-radius: var(--radius-md); font-size: 0.88rem; border: 1px solid rgba(244, 63, 94, 0.4); display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot danger"></span> <b>Dominio racional</b> <span id="route-dominio">(0% por comenzar)</span>
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <footer style="margin-top: auto; border-top: 1px solid var(--border-subtle); padding: 24px 0; text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+    <div class="container">
+      <p>AranduMath &copy; 2026 — Aprendé Matemática a tu manera.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/i18n.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/progressService.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    function renderDashboardProgress() {
+      const summary = window.progressService.summary();
+      document.getElementById('user-completed-count').textContent = `${summary.exercisesCompleted} completados`;
+      document.getElementById('user-streak').textContent = `${summary.currentStreak || 0} día${summary.currentStreak === 1 ? '' : 's'}`;
+
+      let level = 'Por comenzar';
+      if (summary.exercisesCompleted >= 10 && summary.accuracy >= 80) level = 'Dominio sólido';
+      else if (summary.exercisesCompleted >= 5) level = 'En práctica';
+      else if (summary.exercisesCompleted > 0) level = 'Nivel inicial';
+      document.getElementById('user-level').textContent = level;
+
+      ['concepto', 'lineal', 'cuadratica', 'dominio'].forEach(topic => {
+        const value = summary.topicMastery[topic] || 0;
+        document.getElementById(`route-${topic}`).textContent = `(${value}% ${value >= 80 ? 'dominado' : value > 0 ? 'en aprendizaje' : 'por comenzar'})`;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderDashboardProgress);
+  </script>
+</body>
+</html>

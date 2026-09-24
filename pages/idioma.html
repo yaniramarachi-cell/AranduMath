@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AranduMath - Selección de Idioma / Ñe'ẽ Poravo</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo-link">
+        <div class="logo-badge">fx</div>
+        <div class="logo-text">Arandu<span>Math</span></div>
+        <span class="header-tag" data-i18n="brandSubtitle">Bachillerato Técnico en Informática</span>
+      </a>
+
+      <nav class="header-nav">
+        <a href="../index.html" class="nav-link">
+          &larr; <span data-i18n="backToHome" style="margin-left: 6px;">Volver al inicio</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="lang-page-wrapper">
+      <div class="hero-pill">
+        <span>Configuración de Idioma / Ñe'ẽ Ñembosako'i</span>
+      </div>
+
+      <h1 class="hero-title" style="font-size: 2.4rem;" data-i18n="langSelectTitle">
+        Elegí el idioma de tu sesión
+      </h1>
+      
+      <p class="hero-subtitle" data-i18n="langSelectSubtitle">
+        Podés cambiarlo en cualquier momento. AranduMath se adapta a tu forma natural de comunicarte y razonar en matemática.
+      </p>
+
+      <!-- Selector de Idiomas -->
+      <div class="lang-grid">
+        <!-- Card Castellano -->
+        <div class="lang-card" id="card-es" onclick="selectLang('es')">
+          <div class="lang-header">
+            <span class="lang-code-badge">ESPAÑOL</span>
+            <div class="lang-check" id="check-es">&bull;</div>
+          </div>
+          <h2 class="lang-name">Castellano</h2>
+          <p class="lang-desc" data-i18n="langEsDesc">
+            Español claro, dinámico y enfocado en la terminología técnica y curricular del BTI.
+          </p>
+          <div class="lang-sample-box">
+            <small>Ejemplo del Tutor IA:</small>
+            <p><i>"¡Hola! Vamos a analizar esta función cuadrática paso a paso para hallar su vértice."</i></p>
+          </div>
+        </div>
+
+        <!-- Card Guaraní Jopara -->
+        <div class="lang-card" id="card-gn" onclick="selectLang('gn')">
+          <div class="lang-header">
+            <span class="lang-code-badge">JOPARA</span>
+            <div class="lang-check" id="check-gn">&bull;</div>
+          </div>
+          <h2 class="lang-name">Guaraní Jopara</h2>
+          <p class="lang-desc" data-i18n="langGnDesc">
+            Bilingüe Jopara auténtico, natural y cercano. Explicaciones pedagógicas que combinan lo técnico con nuestra identidad.
+          </p>
+          <div class="lang-sample-box">
+            <small>Tutor IA Ñe'ẽ:</small>
+            <p><i>"¡Mba'éichapa! Jahechamína ko función cuadrática mba'éichapa oiko paso a paso."</i></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de Continuar -->
+      <div style="margin-top: 30px;">
+        <button id="btn-continue" class="btn btn-primary btn-lg" onclick="confirmAndNavigate()">
+          <span data-i18n="langContinueBtn">Continuar a mi panel</span>
+          <span class="arrow-icon">&rarr;</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer style="margin-top: auto; border-top: 1px solid var(--border-subtle); padding: 24px 0; text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+    <div class="container">
+      <p>AranduMath &copy; 2026 — Aprendé Matemática a tu manera.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/i18n.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    let selectedLanguage = getCurrentLang();
+
+    function updateCardSelection() {
+      const cardEs = document.getElementById('card-es');
+      const cardGn = document.getElementById('card-gn');
+      const checkEs = document.getElementById('check-es');
+      const checkGn = document.getElementById('check-gn');
+
+      if (selectedLanguage === 'gn') {
+        cardGn.classList.add('selected');
+        cardEs.classList.remove('selected');
+        checkGn.innerHTML = '&check;';
+        checkEs.textContent = '';
+      } else {
+        cardEs.classList.add('selected');
+        cardGn.classList.remove('selected');
+        checkEs.innerHTML = '&check;';
+        checkGn.textContent = '';
+      }
+    }
+
+    function selectLang(lang) {
+      selectedLanguage = lang;
+      setLanguage(lang);
+      updateCardSelection();
+      showToast(lang === 'gn' ? 'Seleccionado Guaraní Jopara' : 'Seleccionado Castellano', 'success');
+    }
+
+    function confirmAndNavigate() {
+      setLanguage(selectedLanguage);
+      window.location.href = 'estudiante.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCardSelection();
+    });
+  </script>
+</body>
+</html>

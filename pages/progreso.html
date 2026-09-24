@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AranduMath - Mi Progreso de Aprendizaje</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="estudiante.html" class="logo-link">
+        <div class="logo-badge">fx</div>
+        <div class="logo-text">Arandu<span>Math</span></div>
+        <span class="header-tag" data-i18n="brandSubtitle">Bachillerato Técnico en Informática</span>
+      </a>
+
+      <nav class="header-nav">
+        <button class="lang-toggle-btn" title="Cambiar idioma / Emoambue ñe'ẽ">
+          <span class="lang-current-label">Castellano</span>
+          <span class="lang-badge">ES</span>
+        </button>
+        <a href="estudiante.html" class="nav-link" data-i18n="studentArea">Mi Panel</a>
+        <a href="practica.html" class="nav-link">Practicar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <section class="dash-header">
+      <h1 class="hero-title" style="font-size: 2.2rem; margin-bottom: 6px;" data-i18n="progressTitle">
+        Mi Progreso de Aprendizaje
+      </h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;" data-i18n="progressSubtitle">
+        Competencias matemáticas alcanzadas y recomendaciones personalizadas
+      </p>
+    </section>
+
+    <!-- Resumen de Métricas Rápidas -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px;">
+      <div class="meter-card" style="margin-bottom: 0; display: flex; align-items: center; gap: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(99,102,241,0.15); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: var(--primary);">
+          EJ
+        </div>
+        <div>
+          <div style="font-size: 0.78rem; color: var(--text-dim);" data-i18n="statCompleted">Ejercicios resueltos</div>
+          <div id="stat-exercises" style="font-size: 1.5rem; font-weight: 800; color: #fff;">0</div>
+        </div>
+      </div>
+
+      <div class="meter-card" style="margin-bottom: 0; display: flex; align-items: center; gap: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(6,182,212,0.15); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: var(--accent-cyan);">
+          NV
+        </div>
+        <div>
+          <div style="font-size: 0.78rem; color: var(--text-dim);" data-i18n="statLevel">Nivel de práctica</div>
+          <div id="stat-level" style="font-size: 1.15rem; font-weight: 700; color: #fff;">Por comenzar</div>
+        </div>
+      </div>
+
+      <div class="meter-card" style="margin-bottom: 0; display: flex; align-items: center; gap: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(245,158,11,0.15); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: var(--accent-amber);">
+          RC
+        </div>
+        <div>
+          <div style="font-size: 0.78rem; color: var(--text-dim);" data-i18n="statStreak">Racha de estudio</div>
+          <div id="stat-streak" style="font-size: 1.15rem; font-weight: 700; color: #fff;">0 días</div>
+        </div>
+      </div>
+
+      <div class="meter-card" style="margin-bottom: 0; display: flex; align-items: center; gap: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(16,185,129,0.15); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: var(--accent-emerald);">
+          MT
+        </div>
+        <div>
+          <div style="font-size: 0.78rem; color: var(--text-dim);" data-i18n="weeklyGoal">Meta semanal</div>
+          <div id="stat-goal" style="font-size: 1.5rem; font-weight: 800; color: var(--accent-emerald);">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de Temas Dominados y Temas a Reforzar -->
+    <div class="progress-grid">
+      
+      <!-- Columna Principal: Desglose de Unidades -->
+      <div>
+        
+        <!-- 1. Temas Dominados -->
+        <div class="meter-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h2 style="font-size: 1.2rem; font-weight: 700;" data-i18n="masteredTopics">Temas Dominados</h2>
+            <span class="badge-tag" style="background: var(--accent-emerald-light); color: var(--accent-emerald);">Alto Rendimiento</span>
+          </div>
+
+          <div id="mastered-topics-list">
+            <!-- Item 1 -->
+            <div class="topic-progress-item">
+              <div class="topic-progress-head">
+                <span style="font-weight: 600;">Concepto de función y relaciones</span>
+                <span id="mastery-concepto" style="color: var(--accent-emerald); font-weight: 700;">0% por comenzar</span>
+              </div>
+              <div class="progress-bar-track">
+                <div id="bar-concepto" class="progress-bar-fill fill-emerald" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">
+                <span id="detail-concepto">Todavía no hay intentos registrados.</span>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="topic-progress-item">
+              <div class="topic-progress-head">
+                <span style="font-weight: 600;">Función lineal y cálculo de pendiente (m)</span>
+                <span id="mastery-lineal" style="color: var(--accent-emerald); font-weight: 700;">0% por comenzar</span>
+              </div>
+              <div class="progress-bar-track">
+                <div id="bar-lineal" class="progress-bar-fill fill-emerald" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">
+                <span id="detail-lineal">Todavía no hay intentos registrados.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Temas que Necesitan Refuerzo -->
+        <div class="meter-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h2 style="font-size: 1.2rem; font-weight: 700;" data-i18n="reinforceTopics">Temas que necesitan refuerzo</h2>
+            <span class="badge-tag" style="background: var(--accent-amber-light); color: var(--accent-amber);">En seguimiento</span>
+          </div>
+
+          <div id="reinforcement-topics-list">
+            <!-- Item 1 -->
+            <div class="topic-progress-item">
+              <div class="topic-progress-head">
+                <span style="font-weight: 600;">Función cuadrática (Vértice y concavidad)</span>
+                <span id="mastery-cuadratica" style="color: var(--accent-amber); font-weight: 700;">0% por comenzar</span>
+              </div>
+              <div class="progress-bar-track">
+                <div id="bar-cuadratica" class="progress-bar-fill fill-amber" style="width: 0%;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Dificultad detectada: cálculo de k = f(h).</span>
+                <a href="practica.html" class="btn btn-outline btn-sm" data-i18n="reinforceBtn">Reforzar ahora</a>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="topic-progress-item">
+              <div class="topic-progress-head">
+                <span style="font-weight: 600;">Dominio y restricciones algebraicas (División por cero)</span>
+                <span id="mastery-dominio" style="color: var(--accent-rose); font-weight: 700;">0% por comenzar</span>
+              </div>
+              <div class="progress-bar-track">
+                <div id="bar-dominio" class="progress-bar-fill" style="width: 0%; background: linear-gradient(90deg, #f43f5e, #fb7185);"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Recomendación: repasar asíntotas verticales con el Tutor IA.</span>
+                <a href="tutor.html" class="btn btn-primary btn-sm">Consultar Tutor IA</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Columna Lateral: Competencias de Bachillerato Técnico -->
+      <aside>
+        <div class="meter-card">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">
+            Competencias Curriculares BTI
+          </h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); padding: 12px 14px; border-radius: var(--radius-md); border-left: 3px solid var(--accent-emerald);">
+              <div>
+                <div style="font-weight: 700; font-size: 0.9rem;">Geometría Analítica Lineal</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Dominio del plano cartesiano lineal</div>
+              </div>
+              <span class="badge-tag" style="background: var(--accent-emerald-light); color: var(--accent-emerald);">Acreditado</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); padding: 12px 14px; border-radius: var(--radius-md); border-left: 3px solid var(--primary);">
+              <div>
+                <div style="font-weight: 700; font-size: 0.9rem;">Razonamiento con Tutor IA</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Uso de los 4 niveles de ayuda</div>
+              </div>
+              <span class="badge-tag" style="background: var(--primary-light); color: #a5b4fc;">En proceso</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); padding: 12px 14px; border-radius: var(--radius-md); border-left: 3px solid var(--text-dim); opacity: 0.6;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.9rem;">Modelado Parabólico Cuadrático</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Cálculo de raíces y máximos/mínimos</div>
+              </div>
+              <span class="badge-tag" style="background: rgba(255,255,255,0.06); color: var(--text-dim);">Pendiente</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; text-align: center;">
+            <a href="practica.html" class="btn btn-primary" style="width: 100%;">
+              <span>Continuar Practicando</span>
+              <span class="arrow-icon">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer style="margin-top: auto; border-top: 1px solid var(--border-subtle); padding: 24px 0; text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+    <div class="container">
+      <p>AranduMath &copy; 2026 — Aprendé Matemática a tu manera.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/i18n.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/progressService.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    function progressLabel(value) {
+      if (value >= 80) return `${value}% dominado`;
+      if (value > 0) return `${value}% en aprendizaje`;
+      return '0% por comenzar';
+    }
+
+    function updateTopic(topic, summary) {
+      const value = summary.topicMastery[topic] || 0;
+      const label = document.getElementById(`mastery-${topic}`);
+      const bar = document.getElementById(`bar-${topic}`);
+      const detail = document.getElementById(`detail-${topic}`);
+      const data = summary.topics[topic];
+      if (label) label.textContent = progressLabel(value);
+      if (bar) bar.style.width = `${value}%`;
+      if (detail) {
+        detail.textContent = data
+          ? `${data.attempts} intentos · ${data.correct} correctos · ${data.helpRequests} ayudas utilizadas.`
+          : 'Todavía no hay intentos registrados.';
+      }
+    }
+
+    function renderRealProgress() {
+      const summary = window.progressService.summary();
+      document.getElementById('stat-exercises').textContent = summary.exercisesCompleted;
+      document.getElementById('stat-streak').textContent = `${summary.currentStreak || 0} día${summary.currentStreak === 1 ? '' : 's'}`;
+      document.getElementById('stat-goal').textContent = `${Math.min(100, summary.exercisesCompleted * 10)}%`;
+
+      let level = 'Por comenzar';
+      if (summary.exercisesCompleted >= 10 && summary.accuracy >= 80) level = 'Dominio sólido';
+      else if (summary.exercisesCompleted >= 5) level = 'En práctica';
+      else if (summary.exercisesCompleted > 0) level = 'Nivel inicial';
+      document.getElementById('stat-level').textContent = level;
+
+      ['concepto', 'lineal', 'cuadratica', 'dominio'].forEach(topic => updateTopic(topic, summary));
+    }
+
+    document.addEventListener('DOMContentLoaded', renderRealProgress);
+    window.addEventListener('progressUpdated', renderRealProgress);
+  </script>
+</body>
+</html>

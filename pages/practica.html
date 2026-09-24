@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AranduMath - Práctica Interactiva de Funciones</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="estudiante.html" class="logo-link">
+        <div class="logo-badge">fx</div>
+        <div class="logo-text">Arandu<span>Math</span></div>
+        <span class="header-tag" data-i18n="brandSubtitle">Bachillerato Técnico en Informática</span>
+      </a>
+
+      <nav class="header-nav">
+        <button class="lang-toggle-btn" title="Cambiar idioma / Emoambue ñe'ẽ">
+          <span class="lang-current-label">Castellano</span>
+          <span class="lang-badge">ES</span>
+        </button>
+        <a href="estudiante.html" class="nav-link" data-i18n="studentArea">Mi Panel</a>
+        <a href="tutor.html" class="nav-link">Tutor IA</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container practice-container">
+    
+    <!-- Título y selector de tema -->
+    <div style="margin-bottom: 24px;">
+      <h1 class="hero-title" style="font-size: 2.1rem; margin-bottom: 6px;" data-i18n="practiceTitle">
+        Laboratorio de Práctica: Funciones
+      </h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;" data-i18n="practiceSubtitle">
+        Bachillerato Técnico en Informática - 3° Curso
+      </p>
+    </div>
+
+    <!-- Pestañas de Temas -->
+    <div class="topic-selector-tabs" id="topics-nav">
+      <button class="topic-tab-btn active" onclick="filterByTopic('todos')">Todos los temas</button>
+      <button class="topic-tab-btn" onclick="filterByTopic('concepto')" data-i18n="topicConcepto">Concepto de función</button>
+      <button class="topic-tab-btn" onclick="filterByTopic('lineal')" data-i18n="topicLineal">Función lineal</button>
+      <button class="topic-tab-btn" onclick="filterByTopic('cuadratica')" data-i18n="topicCuadratica">Función cuadrática</button>
+      <button class="topic-tab-btn" onclick="filterByTopic('dominio')" data-i18n="topicDominio">Dominio y recorrido</button>
+      <button class="topic-tab-btn" onclick="filterByTopic('identificar')" data-i18n="topicIdentificar">Identificación gráfica</button>
+    </div>
+
+    <!-- Contenedor Principal de la Práctica (Ejercicio + Gráfico) -->
+    <div class="practice-grid">
+      
+      <!-- Columna Izquierda: Ejercicio y Opciones de Respuesta -->
+      <section class="exercise-card">
+        <div class="exercise-header">
+          <span class="exercise-topic-badge" id="ex-topic-badge">Función</span>
+          <span style="font-size: 0.85rem; color: var(--text-dim);" id="ex-counter">Ejercicio 1 de 5</span>
+        </div>
+
+        <div class="formula-display" id="ex-formula">f(x) = ...</div>
+
+        <h2 class="exercise-question" id="ex-question">
+          Cargando ejercicio...
+        </h2>
+
+        <!-- Opciones de Respuesta -->
+        <div class="answer-options" id="options-container">
+          <!-- Generado dinámicamente -->
+        </div>
+
+        <!-- Botones de Acción -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px;">
+          <button class="btn btn-primary" id="btn-check" onclick="checkAnswer()">
+            <span data-i18n="checkAnswer">Comprobar</span>
+          </button>
+
+          <button class="btn btn-secondary" onclick="openHelpModal()">
+            <span data-i18n="helpBtn">Necesito ayuda</span>
+          </button>
+
+          <button class="btn btn-outline" id="btn-next" onclick="nextExercise()" style="margin-left: auto;">
+            <span data-i18n="nextExercise">Siguiente ejercicio</span>
+            <span class="arrow-icon">&rarr;</span>
+          </button>
+        </div>
+
+        <!-- Área de Feedback -->
+        <div class="feedback-box" id="feedback-area">
+          <div class="feedback-box-title" id="feedback-title">Respuesta correcta</div>
+          <p id="feedback-text" style="font-size: 0.9rem; line-height: 1.5;"></p>
+        </div>
+      </section>
+
+      <!-- Columna Derecha: Gráfico Cartesiano SVG Dinámico -->
+      <section class="graph-card">
+        <div class="graph-title">
+          <span data-i18n="graphLabel">Plano Cartesiano Interactivo</span>
+          <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 500;">BTI GeoMath</span>
+        </div>
+
+        <div class="graph-svg-wrapper">
+          <svg id="cartesian-svg" class="graph-svg" viewBox="0 0 420 300"></svg>
+        </div>
+
+        <div class="graph-legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: #06b6d4;"></div>
+            <span>Función f(x)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #f59e0b;"></div>
+            <span>Vértice / Corte Y</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #10b981;"></div>
+            <span>Raíces</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; width: 100%; background: var(--bg-card); border-radius: var(--radius-md); padding: 14px; border-left: 3px solid var(--primary);">
+          <small style="color: var(--text-dim); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Análisis visual:</small>
+          <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 4px;" id="graph-tip-text">
+            El plano cartesiano muestra en tiempo real las propiedades analíticas del ejercicio actual para facilitar la comprensión gráfica.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Modal de Ayuda Progresiva -->
+  <div class="modal-backdrop" id="help-modal">
+    <div class="modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.2rem; font-weight: 700;" data-i18n="helpTiersTitle">
+          Niveles de Ayuda Progresiva
+        </h3>
+        <button onclick="closeHelpModal()" style="font-size: 1.2rem; color: var(--text-dim); padding: 4px;">&times;</button>
+      </div>
+
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;" data-i18n="helpTiersSubtitle">
+        Elegí cuánta guía necesitás para resolver este desafío:
+      </p>
+
+      <div class="help-tiers-list">
+        <button class="help-tier-card" onclick="showHelpInModal(1)">
+          <div class="help-tier-head">
+            <span class="help-tier-name">
+              <span class="help-indicator-bar bar-pista"></span>
+              <span data-i18n="tier1Name">Pista</span>
+            </span>
+            <span class="help-tier-tag tag-pista" data-i18n="tier1Tag">Nivel 1</span>
+          </div>
+          <p class="help-tier-desc" data-i18n="tier1Desc">Un indicio clave sin resolver el ejercicio.</p>
+        </button>
+
+        <button class="help-tier-card" onclick="showHelpInModal(2)">
+          <div class="help-tier-head">
+            <span class="help-tier-name">
+              <span class="help-indicator-bar bar-explicacion"></span>
+              <span data-i18n="tier2Name">Explicación</span>
+            </span>
+            <span class="help-tier-tag tag-explicacion" data-i18n="tier2Tag">Nivel 2</span>
+          </div>
+          <p class="help-tier-desc" data-i18n="tier2Desc">Concepto o fórmula matemática detrás del paso.</p>
+        </button>
+
+        <button class="help-tier-card" onclick="showHelpInModal(3)">
+          <div class="help-tier-head">
+            <span class="help-tier-name">
+              <span class="help-indicator-bar bar-pasos"></span>
+              <span data-i18n="tier3Name">Paso a paso</span>
+            </span>
+            <span class="help-tier-tag tag-pasos" data-i18n="tier3Tag">Nivel 3</span>
+          </div>
+          <p class="help-tier-desc" data-i18n="tier3Desc">Procedimiento detallado paso por paso.</p>
+        </button>
+
+        <button class="help-tier-card" onclick="showHelpInModal(4)">
+          <div class="help-tier-head">
+            <span class="help-tier-name">
+              <span class="help-indicator-bar bar-completa"></span>
+              <span data-i18n="tier4Name">Resolución explicada</span>
+            </span>
+            <span class="help-tier-tag tag-completa" data-i18n="tier4Tag">Nivel 4</span>
+          </div>
+          <p class="help-tier-desc" data-i18n="tier4Desc">Solución completa fundamentando cada decisión.</p>
+        </button>
+      </div>
+
+      <!-- Contenedor del contenido de ayuda revelado -->
+      <div id="modal-help-content" style="display: none; margin-top: 18px; padding: 14px; background: var(--bg-card); border-radius: var(--radius-md); border-left: 4px solid var(--accent-cyan); font-size: 0.9rem; line-height: 1.5;"></div>
+
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="btn btn-secondary btn-sm" onclick="closeHelpModal()" data-i18n="closeBtn">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top: auto; border-top: 1px solid var(--border-subtle); padding: 24px 0; text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+    <div class="container">
+      <p>AranduMath &copy; 2026 — Aprendé Matemática a tu manera.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/i18n.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/progressService.js"></script>
+  <script src="../js/tutorService.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    let activeExerciseIndex = 0;
+    let filteredExercises = getAllExercises();
+    let selectedOptionId = null;
+
+    function renderCurrentExercise() {
+      if (filteredExercises.length === 0) return;
+
+      const ex = filteredExercises[activeExerciseIndex];
+      const lang = getCurrentLang();
+
+      document.getElementById('ex-topic-badge').textContent = ex.topicName ? (ex.topicName[lang] || ex.topicName.es) : ex.topic;
+      document.getElementById('ex-counter').textContent = `Ejercicio ${activeExerciseIndex + 1} de ${filteredExercises.length}`;
+      document.getElementById('ex-formula').textContent = ex.formula;
+      document.getElementById('ex-question').textContent = ex.question[lang] || ex.question.es;
+
+      // Opciones
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+      selectedOptionId = null;
+
+      ex.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-option-btn';
+        btn.id = `opt-${opt.id}`;
+        btn.onclick = () => selectOption(opt.id);
+
+        const optText = opt.text[lang] || opt.text.es;
+        btn.innerHTML = `
+          <span class="option-letter">${opt.id}</span>
+          <span>${optText}</span>
+        `;
+        container.appendChild(btn);
+      });
+
+      // Ocultar feedback
+      const fb = document.getElementById('feedback-area');
+      fb.style.display = 'none';
+
+      // Dibujar gráfico interactivo
+      if (ex.graph) {
+        renderCartesianGraph('cartesian-svg', ex.graph);
+      }
+
+      // Contexto del tutor
+      window.tutorService.setExerciseContext(ex);
+    }
+
+    function selectOption(id) {
+      selectedOptionId = id;
+      const buttons = document.querySelectorAll('.answer-option-btn');
+      buttons.forEach(b => b.classList.remove('selected'));
+      const activeBtn = document.getElementById(`opt-${id}`);
+      if (activeBtn) activeBtn.classList.add('selected');
+    }
+
+    function checkAnswer() {
+      if (!selectedOptionId) {
+        showToast("Por favor seleccioná una opción para comprobar", "warning");
+        return;
+      }
+
+      const ex = filteredExercises[activeExerciseIndex];
+      const lang = getCurrentLang();
+      const selected = ex.options.find(o => o.id === selectedOptionId);
+      const fb = document.getElementById('feedback-area');
+      const fbTitle = document.getElementById('feedback-title');
+      const fbText = document.getElementById('feedback-text');
+
+      fb.style.display = 'block';
+
+      if (selected && selected.correct) {
+        window.progressService.recordAttempt(ex, true);
+        fb.className = 'feedback-box correct';
+        fbTitle.textContent = lang === 'gn' ? 'Respuesta correcta (¡Iporãiterei!)' : 'Respuesta correcta';
+        fbText.innerHTML = (ex.progressiveHelp && ex.progressiveHelp.tier4) 
+          ? (ex.progressiveHelp.tier4[lang] || ex.progressiveHelp.tier4.es)
+          : (lang === 'gn' ? "Repyta porãiterei ko tembiapópe." : "Tu respuesta es totalmente correcta.");
+        showToast(lang === 'gn' ? 'Respuesta correcta' : 'Respuesta correcta', 'success');
+      } else {
+        window.progressService.recordAttempt(ex, false);
+        fb.className = 'feedback-box incorrect';
+        fbTitle.textContent = lang === 'gn' ? 'Revisemos este paso (Eñeha\'ã jeyna)' : 'Revisemos este paso';
+        fbText.innerHTML = (ex.progressiveHelp && ex.progressiveHelp.tier1)
+          ? (ex.progressiveHelp.tier1[lang] || ex.progressiveHelp.tier1.es)
+          : (lang === 'gn' ? "Ehechami jey umi conceptos." : "Esa opción no es la adecuada. Revisá la pista de ayuda para orientarte.");
+        showToast(lang === 'gn' ? 'Revisá la pista para orientarte' : 'Revisá la pista para orientarte', 'warning');
+      }
+    }
+
+    function nextExercise() {
+      activeExerciseIndex = (activeExerciseIndex + 1) % filteredExercises.length;
+      renderCurrentExercise();
+    }
+
+    function filterByTopic(topic) {
+      const tabs = document.querySelectorAll('.topic-tab-btn');
+      tabs.forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const all = getAllExercises();
+      if (topic === 'todos') {
+        filteredExercises = all;
+      } else {
+        filteredExercises = all.filter(e => e.topic === topic);
+        if (filteredExercises.length === 0) filteredExercises = all;
+      }
+      activeExerciseIndex = 0;
+      renderCurrentExercise();
+    }
+
+    // Modal de Ayuda
+    function openHelpModal() {
+      const modal = document.getElementById('help-modal');
+      const helpBox = document.getElementById('modal-help-content');
+      helpBox.style.display = 'none';
+      modal.classList.add('active');
+    }
+
+    function closeHelpModal() {
+      const modal = document.getElementById('help-modal');
+      modal.classList.remove('active');
+    }
+
+    async function showHelpInModal(tierLevel) {
+      const ex = filteredExercises[activeExerciseIndex];
+      const lang = getCurrentLang();
+      const helpBox = document.getElementById('modal-help-content');
+      helpBox.style.display = 'block';
+      helpBox.innerHTML = '<i>Cargando orientación del tutor...</i>';
+
+      window.progressService.recordHelp(ex, tierLevel);
+
+      const content = await window.tutorService.getProgressiveHelp(tierLevel, ex, lang);
+      helpBox.innerHTML = content;
+    }
+
+    // Re-renderizar si el usuario cambia el idioma en la cabecera
+    window.addEventListener('languageChanged', () => {
+      renderCurrentExercise();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCurrentExercise();
+    });
+  </script>
+</body>
+</html>

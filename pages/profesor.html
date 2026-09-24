@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AranduMath - Portal para Docentes</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo-link">
+        <div class="logo-badge">fx</div>
+        <div class="logo-text">Arandu<span>Docente</span></div>
+        <span class="header-tag">Gestión Pedagógica BTI</span>
+      </a>
+
+      <nav class="header-nav">
+        <button class="lang-toggle-btn" title="Cambiar idioma / Emoambue ñe'ẽ">
+          <span class="lang-current-label">Castellano</span>
+          <span class="lang-badge">ES</span>
+        </button>
+        <a href="estudiante.html" class="nav-link" data-i18n="studentArea">Vista Estudiante</a>
+        <a href="../index.html" class="nav-link" data-i18n="backToHome">Inicio</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <section class="dash-header">
+      <div class="dash-welcome">
+        <div>
+          <h1 class="hero-title" style="font-size: 2.2rem; margin-bottom: 6px;" data-i18n="teacherTitle">
+            Portal Docente AranduMath
+          </h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;" data-i18n="teacherSubtitle">
+            Gestión de ejercicios curriculares y seguimiento del 3° Año Bachillerato Técnico en Informática
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <a href="practica.html" class="btn btn-secondary btn-sm">
+            Probar Práctica
+          </a>
+          <a href="tutor.html" class="btn btn-secondary btn-sm">
+            Probar Tutor IA
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pestañas del Portal Docente -->
+    <div class="topic-selector-tabs">
+      <button class="topic-tab-btn active" id="tab-create" onclick="switchTeacherTab('create')">
+        <span data-i18n="newExerciseTab">Crear Nuevo Ejercicio</span>
+      </button>
+      <button class="topic-tab-btn" id="tab-students" onclick="switchTeacherTab('students')">
+        <span data-i18n="studentsTab">Rendimiento del Curso (3° BTI)</span>
+      </button>
+      <button class="topic-tab-btn" id="tab-repo" onclick="switchTeacherTab('repo')">
+        Banco de Ejercicios
+      </button>
+    </div>
+
+    <!-- SECCIÓN 1: FORMULARIO CREAR EJERCICIO -->
+    <section id="section-create" class="teacher-grid">
+      
+      <div class="meter-card" style="margin-bottom: 0;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 18px;" data-i18n="newExerciseTab">
+          Crear Nuevo Ejercicio
+        </h2>
+
+        <form id="create-exercise-form" onsubmit="handleCreateExercise(event)">
+          
+          <div class="form-group">
+            <label class="form-label" data-i18n="exerciseTopicLabel">Tema de la unidad matemática</label>
+            <select class="form-control" id="ex-topic" required>
+              <option value="concepto">Concepto de función (Relaciones y regla vertical)</option>
+              <option value="lineal">Función lineal y afín (Pendiente y raíz)</option>
+              <option value="cuadratica">Función cuadrática (Parábolas y vértice)</option>
+              <option value="dominio">Dominio y recorrido (Restricciones)</option>
+              <option value="identificar">Identificación gráfica</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="exerciseTitleLabel">Fórmula o expresión matemática</label>
+            <input type="text" class="form-control" id="ex-formula" placeholder="Ej: f(x) = 3x - 6  o  f(x) = x² - 9" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="exerciseStatementLabel">Enunciado o pregunta pedagógica</label>
+            <textarea class="form-control" id="ex-statement" rows="3" placeholder="Ej: Calculá la raíz de la función lineal y determiná si es creciente o decreciente..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="exerciseExpectedLabel">Respuesta correcta (y 3 opciones de distracción)</label>
+            <input type="text" class="form-control" id="ex-opt-correct" placeholder="Opción A (Correcta): Raíz x = 2, pendiente m = 3 > 0 (creciente)" style="margin-bottom: 8px;" required>
+            <input type="text" class="form-control" id="ex-opt-wrong1" placeholder="Opción B (Distractor 1): Raíz x = -2, decreciente" style="margin-bottom: 8px;" required>
+            <input type="text" class="form-control" id="ex-opt-wrong2" placeholder="Opción C (Distractor 2): Raíz x = 6, horizontal" required>
+          </div>
+
+          <!-- Campos de Ayuda Progresiva configurables por el profesor -->
+          <div style="background: var(--bg-card); padding: 18px; border-radius: var(--radius-md); margin-bottom: 20px;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--accent-cyan);">
+              Configurar Niveles de Ayuda Progresiva
+            </h4>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="exerciseHintLabel">Pista pedagógica (Nivel 1 - Indicio sin dar la respuesta)</label>
+              <input type="text" class="form-control" id="ex-tier1" placeholder="Ej: Igualá la función f(x) a cero y despejá x..." required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="exerciseExplanationLabel">Explicación conceptual (Nivel 2 - Teoría matemática)</label>
+              <input type="text" class="form-control" id="ex-tier2" placeholder="Ej: En toda función f(x) = mx + b, la raíz ocurre cuando y = 0..." required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="exerciseStepLabel">Resolución completa explicada (Nivel 4)</label>
+              <textarea class="form-control" id="ex-tier4" rows="2" placeholder="Ej: 3x - 6 = 0 => 3x = 6 => x = 2. Al ser m = 3 positivo, la recta es creciente..." required></textarea>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">
+              <span data-i18n="saveBtn">Guardar Ejercicio en el Sistema</span>
+            </button>
+            <button type="reset" class="btn btn-secondary" data-i18n="cancelBtn">
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Previsualización en Vivo del Ejercicio Creado -->
+      <aside>
+        <div class="meter-card" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; color: var(--text-muted);">
+            Vista Previa para el Estudiante
+          </h3>
+
+          <div style="background: var(--bg-card); border-radius: var(--radius-md); padding: 18px; border: 1px dashed rgba(255,255,255,0.15);">
+            <div style="font-size: 0.75rem; background: var(--primary-light); color: #a5b4fc; display: inline-block; padding: 2px 8px; border-radius: var(--radius-full); margin-bottom: 8px;">
+              Tema: <span id="preview-topic-label">Función lineal</span>
+            </div>
+
+            <div class="formula-display" style="font-size: 1.1rem; padding: 10px; margin-bottom: 12px;" id="preview-formula">
+              f(x) = 3x - 6
+            </div>
+
+            <p style="font-size: 0.92rem; font-weight: 600; margin-bottom: 14px;" id="preview-statement">
+              Calculá la raíz de la función lineal y determiná si es creciente o decreciente...
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
+              <div style="background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px;">
+                <b>A:</b> <span id="preview-optA">Opción Correcta</span>
+              </div>
+              <div style="background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px;">
+                <b>B:</b> <span id="preview-optB">Distractor 1</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 14px; font-size: 0.85rem; color: #a7f3d0;">
+            <b>Criterio Pedagógico:</b> Al registrar las pistas y explicaciones en 4 niveles, el Tutor IA de AranduMath podrá orientar paso a paso a los alumnos sin limitarse a mostrar el resultado final.
+          </div>
+        </div>
+      </aside>
+
+    </section>
+
+    <!-- SECCIÓN 2: TABLA DE ALUMNOS Y COMPETENCIAS (3° BTI) -->
+    <section id="section-students" class="meter-card" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;" data-i18n="studentListTitle">
+            Monitoreo de Alumnos - 3° Informática
+          </h2>
+          <p style="font-size: 0.85rem; color: var(--text-dim);">
+            Grupo: 3° Curso BTI &bull; Turno Mañana &bull; Total: 28 alumnos matriculados
+          </p>
+        </div>
+
+        <button class="btn btn-outline btn-sm" onclick="showToast('Generando reporte académico en formato tabular', 'info')">
+          Exportar Planilla
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th data-i18n="studentColName">Estudiante</th>
+              <th data-i18n="studentColCompleted">Ejercicios</th>
+              <th data-i18n="studentColMastery">Nivel de Dominio</th>
+              <th>Tema que necesita refuerzo</th>
+              <th data-i18n="studentColStatus">Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="teacher-students-tbody">
+            <!-- Renderizado dinámicamente con TEACHER_STUDENTS_DATA -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: BANCO DE EJERCICIOS DEL SISTEMA -->
+    <section id="section-repo" class="meter-card" style="display: none;">
+      <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">
+        Banco de Ejercicios Disponibles
+      </h2>
+      <div id="exercise-repo-list" style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Llenado dinámicamente -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="margin-top: auto; border-top: 1px solid var(--border-subtle); padding: 24px 0; text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+    <div class="container">
+      <p>AranduMath &copy; 2026 — Plataforma Educativa BTI.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/i18n.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/progressService.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    function switchTeacherTab(tab) {
+      document.getElementById('tab-create').classList.remove('active');
+      document.getElementById('tab-students').classList.remove('active');
+      document.getElementById('tab-repo').classList.remove('active');
+
+      document.getElementById('section-create').style.display = 'none';
+      document.getElementById('section-students').style.display = 'none';
+      document.getElementById('section-repo').style.display = 'none';
+
+      if (tab === 'create') {
+        document.getElementById('tab-create').classList.add('active');
+        document.getElementById('section-create').style.display = 'grid';
+      } else if (tab === 'students') {
+        document.getElementById('tab-students').classList.add('active');
+        document.getElementById('section-students').style.display = 'block';
+        renderStudentsTable();
+      } else if (tab === 'repo') {
+        document.getElementById('tab-repo').classList.add('active');
+        document.getElementById('section-repo').style.display = 'block';
+        renderExerciseRepo();
+      }
+    }
+
+    function renderStudentsTable() {
+      const tbody = document.getElementById('teacher-students-tbody');
+      tbody.innerHTML = '';
+
+      const localSummary = window.progressService.summary();
+      const localNeedHelp = Object.entries(localSummary.topicMastery)
+        .sort((a, b) => a[1] - b[1])[0]?.[0] || 'Aún sin actividad';
+      const students = [
+        {
+          id: 'local',
+          name: 'Estudiante de demostración',
+          completed: localSummary.exercisesCompleted,
+          mastery: `${localSummary.accuracy}%`,
+          status: localSummary.exercisesCompleted === 0 ? 'En progreso' : localSummary.accuracy >= 80 ? 'Óptimo' : 'Requiere apoyo',
+          needHelp: localNeedHelp
+        },
+        ...TEACHER_STUDENTS_DATA.slice(1)
+      ];
+
+      students.forEach(st => {
+        const tr = document.createElement('tr');
+        
+        let statusBadge = '<span class="badge-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Óptimo</span>';
+        if (st.status === 'Requiere apoyo') {
+          statusBadge = '<span class="badge-tag" style="background: rgba(244, 63, 94, 0.2); color: #f87171;">Requiere apoyo</span>';
+        } else if (st.status === 'En progreso') {
+          statusBadge = '<span class="badge-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">En progreso</span>';
+        }
+
+        tr.innerHTML = `
+          <td style="font-weight: 600;">${st.name}</td>
+          <td>${st.completed} resueltos</td>
+          <td><b>${st.mastery}</b></td>
+          <td style="color: var(--accent-cyan);">${st.needHelp}</td>
+          <td>${statusBadge}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Recomendación de refuerzo enviada a ${st.name}', 'success')">
+              Enviar refuerzo
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderExerciseRepo() {
+      const repoBox = document.getElementById('exercise-repo-list');
+      repoBox.innerHTML = '';
+      const all = getAllExercises();
+
+      all.forEach((ex, idx) => {
+        const card = document.createElement('div');
+        card.style.background = 'var(--bg-card)';
+        card.style.padding = '14px 18px';
+        card.style.borderRadius = 'var(--radius-md)';
+        card.style.border = '1px solid var(--border-subtle)';
+        card.style.display = 'flex';
+        card.style.justifyContent = 'space-between';
+        card.style.alignItems = 'center';
+
+        card.innerHTML = `
+          <div>
+            <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; text-transform: uppercase;">
+              ${ex.topic}
+            </div>
+            <div style="font-weight: 600; font-size: 0.95rem; margin: 2px 0;">
+              ${ex.formula} — ${ex.question.es || ex.question}
+            </div>
+          </div>
+          <a href="practica.html" class="btn btn-outline btn-sm">Probar</a>
+        `;
+        repoBox.appendChild(card);
+      });
+    }
+
+    // Actualización de previsualización en vivo
+    document.getElementById('ex-formula').addEventListener('input', (e) => {
+      document.getElementById('preview-formula').textContent = e.target.value || 'f(x) = ...';
+    });
+    document.getElementById('ex-statement').addEventListener('input', (e) => {
+      document.getElementById('preview-statement').textContent = e.target.value || 'Enunciado...';
+    });
+    document.getElementById('ex-opt-correct').addEventListener('input', (e) => {
+      document.getElementById('preview-optA').textContent = e.target.value || 'Opción Correcta';
+    });
+    document.getElementById('ex-opt-wrong1').addEventListener('input', (e) => {
+      document.getElementById('preview-optB').textContent = e.target.value || 'Distractor 1';
+    });
+    document.getElementById('ex-topic').addEventListener('change', (e) => {
+      document.getElementById('preview-topic-label').textContent = e.target.options[e.target.selectedIndex].text;
+    });
+
+    function handleCreateExercise(event) {
+      event.preventDefault();
+      const topic = document.getElementById('ex-topic').value;
+      const formula = document.getElementById('ex-formula').value.trim();
+      const statement = document.getElementById('ex-statement').value.trim();
+      const optCorrect = document.getElementById('ex-opt-correct').value.trim();
+      const optWrong1 = document.getElementById('ex-opt-wrong1').value.trim();
+      const optWrong2 = document.getElementById('ex-opt-wrong2').value.trim();
+      const tier1 = document.getElementById('ex-tier1').value.trim();
+      const tier2 = document.getElementById('ex-tier2').value.trim();
+      const tier4 = document.getElementById('ex-tier4').value.trim();
+
+      const newExercise = {
+        id: "custom-" + Date.now(),
+        topic: topic,
+        topicName: { es: topic, gn: topic },
+        formula: formula,
+        question: {
+          es: statement,
+          gn: statement
+        },
+        options: [
+          { id: "A", text: { es: optCorrect, gn: optCorrect }, correct: true },
+          { id: "B", text: { es: optWrong1, gn: optWrong1 }, correct: false },
+          { id: "C", text: { es: optWrong2, gn: optWrong2 }, correct: false }
+        ],
+        graph: {
+          type: topic === 'cuadratica' ? 'quadratic' : 'linear',
+          m: 3,
+          b: -6,
+          root: 2,
+          interceptY: -6
+        },
+        progressiveHelp: {
+          tier1: { es: `<b>Pista:</b> ${tier1}`, gn: `<b>Pista:</b> ${tier1}` },
+          tier2: { es: `<b>Explicación:</b> ${tier2}`, gn: `<b>Explicación:</b> ${tier2}` },
+          tier3: { es: `<b>Paso a paso:</b> Realizá el despeje algebraico aislando x paso a paso.`, gn: `<b>Paso a paso:</b> Eñeha'ã ehesa'ỹijo paso a paso.` },
+          tier4: { es: `<b>Resolución explicada:</b> ${tier4}`, gn: `<b>Solución:</b> ${tier4}` }
+        }
+      };
+
+      saveCustomExercise(newExercise);
+      showToast("Ejercicio guardado con éxito. Disponible en la Práctica.", "success");
+      document.getElementById('create-exercise-form').reset();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStudentsTable();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AranduMath - Tutor de Matemática IA</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="estudiante.html" class="logo-link">
+        <div class="logo-badge">fx</div>
+        <div class="logo-text">Arandu<span>Math</span></div>
+        <span class="header-tag" data-i18n="brandSubtitle">Bachillerato Técnico en Informática</span>
+      </a>
+
+      <nav class="header-nav">
+        <button class="lang-toggle-btn" title="Cambiar idioma / Emoambue ñe'ẽ">
+          <span class="lang-current-label">Castellano</span>
+          <span class="lang-badge">ES</span>
+        </button>
+        <a href="estudiante.html" class="nav-link" data-i18n="studentArea">Mi Panel</a>
+        <a href="practica.html" class="nav-link">Practicar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Layout del Tutor: Chat + Panel de Ayuda y Foto -->
+  <main class="container">
+    <div class="tutor-layout">
+      
+      <!-- Panel de Chat Principal -->
+      <section class="chat-panel">
+        <div class="chat-header">
+          <div class="tutor-status-wrap">
+            <div class="tutor-avatar">AM</div>
+            <div>
+              <div class="tutor-name" data-i18n="tutorTitle">Tutor AranduMath</div>
+              <div class="tutor-badge-status">
+                <span class="status-dot-pulse"></span>
+                <span data-i18n="onlineStatus">En línea</span> &bull; 
+                <span style="color: var(--text-dim);" data-i18n="tutorSubtitle">Bachillerato Técnico en Informática</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="btn btn-sm btn-secondary" onclick="clearChat()" title="Reiniciar chat">
+              Reiniciar
+            </button>
+          </div>
+        </div>
+
+        <!-- Historial de Mensajes -->
+        <div class="chat-messages" id="chat-messages-box">
+          <!-- Mensaje inicial del tutor -->
+          <div class="chat-msg tutor">
+            <div class="tutor-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">AM</div>
+            <div>
+              <div class="msg-bubble" data-i18n="tutorWelcomeMsg">
+                ¡Hola! Soy tu tutor de AranduMath. Podés escribir tu consulta, elegir un tema o subir una foto de tu ejercicio. ¿En qué problema de funciones querés que trabajemos hoy?
+              </div>
+              <div class="chat-msg-time" id="initial-msg-time">Ahora</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preguntas Rápidas Sugeridas -->
+        <div class="quick-prompts">
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('¿Cómo calculo el dominio de una función racional?')">
+            Cálculo del dominio
+          </button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('¿Qué es el vértice de una parábola y cómo se calcula?')">
+            Vértice de una parábola
+          </button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('¿Cuál es la diferencia entre función lineal y afín?')">
+            Función lineal vs afín
+          </button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('¿Cómo sé si una gráfica representa una función?')">
+            Prueba de la recta vertical
+          </button>
+        </div>
+
+        <!-- Barra de Entrada de Pregunta -->
+        <form class="chat-input-bar" id="chat-form" onsubmit="handleChatSubmit(event)">
+          <button type="button" class="icon-btn" onclick="triggerPhotoUpload()" title="Subir foto de ejercicio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </button>
+
+          <input 
+            type="text" 
+            id="user-input" 
+            class="chat-input" 
+            placeholder="Escribí tu pregunta de matemática aquí..." 
+            data-i18n-placeholder="tutorInputPlaceholder"
+            autocomplete="off"
+            required
+          >
+
+          <button type="submit" class="icon-btn primary" title="Enviar pregunta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+      </section>
+
+      <!-- Barra Lateral: 4 Niveles de Ayuda Progresiva & Subida de Foto -->
+      <aside class="tutor-sidebar">
+        
+        <!-- Caja de Ayuda Progresiva -->
+        <div class="side-box">
+          <div class="side-box-title" data-i18n="helpTiersTitle">
+            Niveles de Ayuda Progresiva
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 14px;" data-i18n="helpTiersSubtitle">
+            Elegí cuánta guía necesitás para tu ejercicio:
+          </p>
+
+          <div class="help-tiers-list">
+            <!-- Nivel 1: Pista -->
+            <button class="help-tier-card" onclick="requestHelpTier(1)">
+              <div class="help-tier-head">
+                <span class="help-tier-name">
+                  <span class="help-indicator-bar bar-pista"></span>
+                  <span data-i18n="tier1Name">Pista</span>
+                </span>
+                <span class="help-tier-tag tag-pista" data-i18n="tier1Tag">Nivel 1</span>
+              </div>
+              <p class="help-tier-desc" data-i18n="tier1Desc">
+                Un indicio clave sin resolver el ejercicio.
+              </p>
+            </button>
+
+            <!-- Nivel 2: Explicación -->
+            <button class="help-tier-card" onclick="requestHelpTier(2)">
+              <div class="help-tier-head">
+                <span class="help-tier-name">
+                  <span class="help-indicator-bar bar-explicacion"></span>
+                  <span data-i18n="tier2Name">Explicación</span>
+                </span>
+                <span class="help-tier-tag tag-explicacion" data-i18n="tier2Tag">Nivel 2</span>
+              </div>
+              <p class="help-tier-desc" data-i18n="tier2Desc">
+                Concepto o fórmula matemática detrás del paso.
+              </p>
+            </button>
+
+            <!-- Nivel 3: Paso a paso -->
+            <button class="help-tier-card" onclick="requestHelpTier(3)">
+              <div class="help-tier-head">
+                <span class="help-tier-name">
+                  <span class="help-indicator-bar bar-pasos"></span>
+                  <span data-i18n="tier3Name">Paso a paso</span>
+                </span>
+                <span class="help-tier-tag tag-pasos" data-i18n="tier3Tag">Nivel 3</span>
+              </div>
+              <p class="help-tier-desc" data-i18n="tier3Desc">
+                Procedimiento detallado paso por paso.
+              </p>
+            </button>
+
+            <!-- Nivel 4: Resolución explicada -->
+            <button class="help-tier-card" onclick="requestHelpTier(4)">
+              <div class="help-tier-head">
+                <span class="help-tier-name">
+                  <span class="help-indicator-bar bar-completa"></span>
+                  <span data-i18n="tier4Name">Resolución explicada</span>
+                </span>
+                <span class="help-tier-tag tag-completa" data-i18n="tier4Tag">Nivel 4</span>
+              </div>
+              <p class="help-tier-desc" data-i18n="tier4Desc">
+                Solución completa fundamentando cada decisión.
+              </p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Caja de Subida de Foto de Ejercicio -->
+        <div class="side-box">
+          <div class="side-box-title" data-i18n="uploadBoxTitle">
+            Subir foto de ejercicio
+          </div>
+
+          <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="handleFileSelected(event)">
+
+          <div class="upload-dropzone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+            <div class="upload-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <div class="upload-text" data-i18n="uploadBoxDrop">Arrastrá una foto o hacé clic</div>
+            <div class="upload-sub" data-i18n="uploadBoxFormats">Formatos JPG, PNG (Simulación OCR)</div>
+          </div>
+
+          <!-- Previsualización de Foto Cargada -->
+          <div class="photo-preview-box" id="preview-box">
+            <img id="photo-preview-img" src="" alt="Ejercicio subido">
+            <button class="photo-preview-remove" onclick="removePhoto()" title="Eliminar foto">&times;</button>
+          </div>
+
+          <!-- Botón de Simular Foto de Muestra -->
+          <div style="margin-top: 12px; text-align: center;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="loadSamplePhotoExercise()" style="width: 100%;">
+              Cargar imagen de muestra
+            </button>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../js/i18n.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/progressService.js"></script>
+  <script src="../js/tutorService.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    // Contexto activo para el tutor
+    let currentExercise = INITIAL_EXERCISES[2]; // f(x) = x^2 - 4x + 3
+    window.tutorService.setExerciseContext(currentExercise);
+
+    // Revisar si viene de "?action=upload"
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('action') === 'upload') {
+        setTimeout(() => {
+          showToast("Seleccioná o arrastrá la foto del ejercicio para analizar", "info");
+          document.getElementById('drop-zone').scrollIntoView({ behavior: 'smooth' });
+        }, 400);
+      }
+    });
+
+    function getFormattedTime() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function sanitizeTutorHtml(html) {
+      const template = document.createElement('template');
+      template.innerHTML = String(html);
+      const allowed = new Set(['B', 'I', 'CODE', 'BR', 'UL', 'OL', 'LI', 'STRONG', 'EM']);
+      template.content.querySelectorAll('*').forEach(element => {
+        if (!allowed.has(element.tagName)) {
+          element.replaceWith(document.createTextNode(element.textContent));
+          return;
+        }
+        [...element.attributes].forEach(attribute => element.removeAttribute(attribute.name));
+      });
+      return template.innerHTML;
+    }
+
+    function appendMessage(sender, text) {
+      const chatBox = document.getElementById('chat-messages-box');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-msg ${sender}`;
+
+      const avatar = sender === 'tutor' 
+        ? '<div class="tutor-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">AM</div>' 
+        : '<div class="tutor-avatar user-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">TU</div>';
+
+      const safeStudentText = String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+      const displayText = sender === 'student' ? safeStudentText : sanitizeTutorHtml(text);
+
+      msgDiv.innerHTML = `
+        ${avatar}
+        <div>
+          <div class="msg-bubble">${displayText}</div>
+          <div class="chat-msg-time">${getFormattedTime()}</div>
+        </div>
+      `;
+
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function handleChatSubmit(event) {
+      event.preventDefault();
+      const input = document.getElementById('user-input');
+      const question = input.value.trim();
+      if (!question) return;
+
+      appendMessage('student', question);
+      input.value = '';
+
+      // Indicador de escritura
+      const typingId = 'typing-' + Date.now();
+      const chatBox = document.getElementById('chat-messages-box');
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'chat-msg tutor';
+      typingDiv.id = typingId;
+      typingDiv.innerHTML = `
+        <div class="tutor-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">AM</div>
+        <div class="msg-bubble" style="color: var(--text-muted); font-style: italic;">
+          Analizando consulta y preparando orientación...
+        </div>
+      `;
+      chatBox.appendChild(typingDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Obtener respuesta desde TutorService
+      const currentLang = getCurrentLang();
+      const response = await window.tutorService.sendMessage(question, currentLang);
+
+      const typingEl = document.getElementById(typingId);
+      if (typingEl) typingEl.remove();
+
+      appendMessage('tutor', response.text);
+    }
+
+    function sendQuickPrompt(promptText) {
+      const input = document.getElementById('user-input');
+      input.value = promptText;
+      document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+    }
+
+    async function requestHelpTier(tierLevel) {
+      const currentLang = getCurrentLang();
+      const tierNames = {
+        1: t('tier1Name'),
+        2: t('tier2Name'),
+        3: t('tier3Name'),
+        4: t('tier4Name')
+      };
+
+      appendMessage('student', `${t('helpBtn')}: ${tierNames[tierLevel]}`);
+
+      window.progressService.recordHelp(currentExercise, tierLevel);
+
+      const helpText = await window.tutorService.getProgressiveHelp(tierLevel, currentExercise, currentLang);
+      appendMessage('tutor', helpText);
+    }
+
+    function triggerPhotoUpload() {
+      document.getElementById('file-input').click();
+    }
+
+    function handleFileSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const previewBox = document.getElementById('preview-box');
+        const previewImg = document.getElementById('photo-preview-img');
+        previewImg.src = e.target.result;
+        previewBox.style.display = 'block';
+
+        processUploadedPhoto(file);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function loadSamplePhotoExercise() {
+      const previewBox = document.getElementById('preview-box');
+      const previewImg = document.getElementById('photo-preview-img');
+      const sampleSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><rect width="400" height="200" fill="%231e293b"/><text x="30" y="60" fill="%23f8fafc" font-family="sans-serif" font-size="18">Ejercicio Cuaderno BTI:</text><text x="30" y="110" fill="%2338bdf8" font-family="monospace" font-size="24">f(x) = x² - 4x + 3</text><text x="30" y="150" fill="%2394a3b8" font-family="sans-serif" font-size="14">Determinar raíces y vértice V(h,k)</text></svg>`;
+      
+      previewImg.src = sampleSvg;
+      previewBox.style.display = 'block';
+
+      await processUploadedPhoto("ejercicio_cuaderno_bti.jpg");
+    }
+
+    async function processUploadedPhoto(photoData) {
+      const filename = photoData instanceof File ? photoData.name : photoData;
+      showToast("Analizando imagen...", "info");
+      appendMessage('student', `Documento adjunto: ${filename}`);
+
+      const currentLang = getCurrentLang();
+      const analysis = await window.tutorService.analyzePhotoExercise(photoData, currentLang);
+
+      appendMessage('tutor', `<b>${analysis.diagnosis}</b><br><br>${analysis.initialHint}`);
+    }
+
+    function removePhoto() {
+      document.getElementById('preview-box').style.display = 'none';
+      document.getElementById('photo-preview-img').src = '';
+      document.getElementById('file-input').value = '';
+    }
+
+    function clearChat() {
+      const chatBox = document.getElementById('chat-messages-box');
+      chatBox.innerHTML = `
+        <div class="chat-msg tutor">
+          <div class="tutor-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">AM</div>
+          <div>
+            <div class="msg-bubble" data-i18n="tutorWelcomeMsg">
+              ${t('tutorWelcomeMsg')}
+            </div>
+            <div class="chat-msg-time">${getFormattedTime()}</div>
+          </div>
+        </div>
+      `;
+      showToast("Historial reiniciado", "info");
+    }
+  </script>
+</body>
+</html>
